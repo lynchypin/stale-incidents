@@ -34,8 +34,13 @@ async function getMaskedInput(query) {
     let inputVal = '';
 
     const onData = (chunk) => {
+      // Ignore escape/ANSI control sequences (like arrow keys, functional keys, etc.)
+      if (chunk.charCodeAt(0) === 27) {
+        return;
+      }
       for (let i = 0; i < chunk.length; i++) {
         const char = chunk[i];
+
         
         // Enter / Return Key
         if (char === '\n' || char === '\r') {
@@ -154,9 +159,17 @@ function buildCsv(data) {
   return lines.join('\n');
 }
 
-// 5. Main Execution Flow
 async function main() {
+  // Node.js version validation (fetch support required)
+  const [major] = process.versions.node.split('.').map(Number);
+  if (major < 18) {
+    console.error('\n\x1b[31mError: Node.js version 18.0.0 or higher is required.\x1b[0m');
+    console.error(`Current version: ${process.version}\n`);
+    process.exit(1);
+  }
+
   let apiKey = '';
+
   
   try {
     apiKey = await getMaskedInput('Enter your PagerDuty API Key: ');

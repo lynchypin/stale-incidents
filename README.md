@@ -25,14 +25,12 @@ A lightweight, zero-dependency Node.js CLI utility that audits PagerDuty service
 ## Installation
 
 Clone the repository locally:
-
 ```bash
 git clone https://github.com/YOUR_USERNAME/pagerduty_service_checker.git
 cd pagerduty_service_checker
 ```
 
 *(Optional)* Make the script executable:
-
 ```bash
 chmod +x check_services.js
 ```
@@ -42,35 +40,28 @@ chmod +x check_services.js
 ## Usage
 
 Run the script using Node.js:
-
 ```bash
 node check_services.js
 ```
 
 Or, if you made the script executable:
-
 ```bash
 ./check_services.js
 ```
 
 ### Interactive Execution
-
 Upon launching, the script will request your API token. Keystrokes will be masked with `*` for security:
-
 ```
 Enter your PagerDuty API Key: ********************
 Fetching PagerDuty services...
 Found 63 services. Fetching open incidents...
 Generating CSV report...
-
 Success: Report written to file:
 /absolute/path/to/pagerduty_service_checker/pagerduty_services_report.csv
 ```
 
 ### Non-Interactive / Scripted Execution
-
 If you need to run the script programmatically (e.g., in a CI/CD pipeline or via crontab), you can pipe the API key to standard input. The script automatically detects the non-TTY environment and falls back to a standard readline prompt without masking (which would fail in raw terminal mode):
-
 ```bash
 echo "YOUR_API_KEY" | node check_services.js
 ```
